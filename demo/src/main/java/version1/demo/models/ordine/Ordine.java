@@ -1,6 +1,7 @@
-package version1.demo.models;
+package version1.demo.models.ordine;
 
 import java.time.LocalDate;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
