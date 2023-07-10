@@ -31,39 +31,6 @@ public class AcquirenteS {
     @Autowired
     private RecapitoRepo recapitoRepo;
 
-    @Transactional
-    public void saveUtente(){
-       Recapito r = new Recapito("marco.valerioti01@gmail.com", "12345", "3278787320");
-       recapitoRepo.save(r);
-
-       Indirizzo i = new Indirizzo("Polistena", "89024", "via delle fabbriche", 11);
-       indirizzoRepo.save(i);
-       Acquirente a = new Acquirente();
-       
-       a.setUsername("Lumi");
-       a.setPassword("1234");
-       a.setRagioneSociale("Marcosoft");
-       a.setPiva("piva1");
-       a.setRecapito(r);
-       a.setIndirizzo(i);
-
-       utenteRepo.save(a);
-
-       Indirizzo i1 = new Indirizzo("Melicucco", "89036", "Contrada monacelle", 2);
-       indirizzoRepo.save(i1);
-
-       Dipendente d = new Dipendente();
-       d.setUsername("Grub");
-       d.setPassword("uspok");
-       d.setNome("Alessandro");
-       d.setCognome("Galata");
-       d.setIndirizzo(i1);
-       d.setRuolo(Ruolo.SOCIO);
-       d.setStipendio(1890.50);
-       d.setTelefono("3278989210");
-
-       utenteRepo.save(d);
-    }
 
     @Transactional(readOnly = false)
     public void createAcquirente(Acquirente acquirente){

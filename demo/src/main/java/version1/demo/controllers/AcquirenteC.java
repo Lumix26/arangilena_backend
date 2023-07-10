@@ -26,7 +26,7 @@ public class AcquirenteC {
     /*  
      * Homepage che mostra le operazioni effettuabili sugli acquirenti.
      */
-    @GetMapping("/homepage")
+    @GetMapping
     public ModelAndView acquirenteHome(Model m) {
         return new ModelAndView("AcquirenteHome.html", "null", null);
     }
@@ -41,9 +41,6 @@ public class AcquirenteC {
 
     @PostMapping("/createAcquirente")
     public void createNewAcquirente(@RequestBody DTOAcquirente dtoA){
-        System.out.println("--------------------"+dtoA.toString()+"----------------");
-        System.out.println(dtoA.getIndirizzo().toString());
-        System.out.println(dtoA.getRecapiti().toString());
         Acquirente a = new Acquirente();
         a.setUsername(dtoA.getUsername());
         a.setPassword(dtoA.getPassword());
@@ -72,7 +69,7 @@ public class AcquirenteC {
     
     @GetMapping("/listaAcquirenti")
     public ModelAndView viewVisualizeAcquirenti(Model m){
-        return new ModelAndView("ListaAcquirente.html", "null", null);
+        return new ModelAndView("ListaAcquirente.html", "acquirenti", aS.listAcquirenti());
     }
 
 }

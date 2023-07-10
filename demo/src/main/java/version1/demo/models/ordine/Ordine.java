@@ -8,10 +8,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
-public class Ordine {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Ordine {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ordine_generator" )
     @SequenceGenerator(name = "ordine_generator", allocationSize = 1)
