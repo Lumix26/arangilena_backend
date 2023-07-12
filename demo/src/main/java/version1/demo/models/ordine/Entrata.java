@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -15,6 +17,10 @@ import version1.demo.models.utente.Acquirente;
 
 @Entity
 public class Entrata extends Ordine{
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatoOrdine stato;
 
     @Column(nullable = false, length = 15)
     private String categoria;
@@ -52,6 +58,26 @@ public class Entrata extends Ordine{
 
     public void setDettagli(LinkedList<DettaglioOrdine> dettagli) {
         this.dettagli = dettagli;
+    }
+
+
+    public StatoOrdine getStato() {
+        return stato;
+    }
+
+
+    public void setStato(StatoOrdine stato) {
+        this.stato = stato;
+    }
+
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     

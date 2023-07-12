@@ -10,11 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import version1.demo.models.ordine.DettaglioOrdine;
 import version1.demo.models.ordine.Entrata;
+import version1.demo.models.ordine.Ordine;
+import version1.demo.models.ordine.StatoOrdine;
 import version1.demo.models.utente.Acquirente;
 import version1.demo.repositories.AcquirenteRepo;
 import version1.demo.repositories.EntrataRepo;
 import version1.demo.repositories.OrdineRepo;
 import version1.demo.repositories.ProdottoRepo;
+import version1.demo.utils.DTOStatoOrdine;
 import version1.demo.utils.DTOrdine;
 
 @Service
@@ -50,8 +53,24 @@ public class OrdineS {
         }
         oe.setDettagli(ordine.getDettagliProd());
         oe.setData(LocalDate.now());
+        oe.setStato(StatoOrdine.ATTESA);
 
         ordineRepo.save(oe);
+    }
+
+    public void updateStatusOrder(DTOStatoOrdine stato){
+
+        Optional<Entrata> op = entrataRepo.findById(stato.getId_ordine());
+        if(!op.isEmpty()){
+            Entrata oe = op.get();
+            if(stato.getStato().equals("LAVORAZIONE")){
+                oe.setStato(StatoOrdine.LAVORAZIONE);
+            }
+            if(stato.getStato().equals("SPEDITO")){
+                oe.setStato(StatoOrdine.SPEDITO);
+            }
+            ordineRepo.save(oe);
+        }
     }
 
 }

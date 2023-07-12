@@ -4,12 +4,14 @@ package version1.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import version1.demo.services.OrdineS;
+import version1.demo.utils.DTOStatoOrdine;
 import version1.demo.utils.DTOrdine;
 
 @RestController
@@ -24,11 +26,10 @@ public class OrdineC {
         return new ModelAndView("ListaOrdini.html", "ordini", ordineS.listaOrdini());
     }
 
-    /*@GetMapping("/creaOrdine")
-    public String createOrdine(@RequestBody DTOrdine ordine){
-        ordineS.creaOrdine(ordine);
-        return "<h1> ordine creato </h1>";
-    }*/
+    @PostMapping("/aggiornaStato")
+    public void aggiornaStatoOrdine(@RequestBody DTOStatoOrdine stato){
+        ordineS.updateStatusOrder(stato);
+    }
 
     
 }
