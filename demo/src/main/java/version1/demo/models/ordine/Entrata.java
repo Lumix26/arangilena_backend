@@ -1,31 +1,61 @@
 package version1.demo.models.ordine;
 
 
-import java.util.List;
+import java.util.LinkedList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import version1.demo.models.prodotto.ProdottoEntrata;
+import jakarta.persistence.OneToMany;
 import version1.demo.models.utente.Acquirente;
 
 @Entity
 public class Entrata extends Ordine{
 
-    @JoinColumn(name = "quantita", nullable = false)
-    private int qnt;
+    @Column(nullable = false, length = 15)
+    private String categoria;
     
-    @Enumerated(EnumType.STRING)
-    @JoinColumn(name = "tipo_prodotto")
-    private Tipologia tipologia;
-
-    @ManyToOne
-    @JoinColumn(name = "id_utente")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_acquirente")
+    @JsonIgnore
     private Acquirente acquirente;
 
-    @ManyToOne
-    @JoinColumn(name = "id_prodotto")
-    private ProdottoEntrata prodottoEntrata;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_ordine")
+    private LinkedList<DettaglioOrdine> dettagli = new LinkedList<>();
+
+    public Entrata() {
+    }
+
+
+    /* Getter & Setter */
+
+
+
+    public Acquirente getAcquirente() {
+        return acquirente;
+    }
+
+    public void setAcquirente(Acquirente acquirente) {
+        this.acquirente = acquirente;
+    }
+
+
+    public LinkedList<DettaglioOrdine> getDettagli() {
+        return dettagli;
+    }
+
+
+    public void setDettagli(LinkedList<DettaglioOrdine> dettagli) {
+        this.dettagli = dettagli;
+    }
+
+    
+    
+
+    
 }

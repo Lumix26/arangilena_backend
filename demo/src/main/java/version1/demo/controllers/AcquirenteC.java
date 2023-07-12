@@ -1,7 +1,6 @@
 package version1.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,19 +39,24 @@ public class AcquirenteC {
     }
 
     @PostMapping("/createAcquirente")
-    public void createNewAcquirente(@RequestBody DTOAcquirente dtoA){
+    public ModelAndView createNewAcquirente(@RequestBody DTOAcquirente dtoA){
         Acquirente a = new Acquirente();
         a.setUsername(dtoA.getUsername());
         a.setPassword(dtoA.getPassword());
-
-        Indirizzo i = dtoA.getIndirizzo();
-        a.setIndirizzo(i);
-
-        Recapito r = dtoA.getRecapiti();
-        a.setRecapito(r);
         a.setPiva(dtoA.getPiva());
         a.setRagioneSociale(dtoA.getRagioneSociale());
-        aS.createAcquirente(a);
+        Indirizzo i = new Indirizzo(dtoA.getCitta(), dtoA.getCap(), dtoA.getVia(), dtoA.getNumeroCivico());
+        Recapito r = new Recapito(dtoA.getMail(),dtoA.getFax(),dtoA.getTelefono());
+        a.setIndirizzo(i);
+        a.setRecapito(r);
+
+        try {
+            aS.createAcquirente(a);
+            return new ModelAndView("ListaAcquirenti.html", "acquirenti", aS.listAcquirenti());
+        } catch (RuntimeException e) {
+            System.out.println("Errore nella creazione di un'acquirente");
+            return new ModelAndView("ErrorCreazione.html", "null", null);
+        }
     }
 
 
@@ -62,14 +66,20 @@ public class AcquirenteC {
     }
 
     @PostMapping("/deleteAcquirente")
-    public void deleteAcquirente (@RequestBody Long id) {
-        aS.deleteAcquirente(id);
+    public ModelAndView deleteAcquirente (@RequestBody Long id) {
+        try {
+            aS.deleteAcquirente(id);
+            return new ModelAndView("ListaAcquirenti.html", "acquirenti", aS.listAcquirenti());
+        } catch (RuntimeException e) {
+            System.out.println("Errore nell'eliminazione di un'acquirente");
+            return new ModelAndView("ErrorCancellazione.html", "null", null);
+        }
     }
 
     
     @GetMapping("/listaAcquirenti")
     public ModelAndView viewVisualizeAcquirenti(Model m){
-        return new ModelAndView("ListaAcquirente.html", "acquirenti", aS.listAcquirenti());
+        return new ModelAndView("ListaAcquirenti.html", "acquirenti", aS.listAcquirenti());
     }
 
 }

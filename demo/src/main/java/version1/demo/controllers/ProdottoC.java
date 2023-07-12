@@ -14,9 +14,9 @@ public class ProdottoC {
     @Autowired
     private ProdottoS pS;
 
-    @GetMapping
+    /*@GetMapping
     public String prova(){
         pS.creaProdotto();
         return "<h1> prodotto inserito </h1>";
-    }
+    }*/
 }

@@ -1,12 +1,12 @@
 package version1.demo.models.prodotto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
@@ -18,16 +18,21 @@ public abstract class Prodotto {
     @SequenceGenerator(name = "prodotto_generator", allocationSize = 1)
     private Long id;
 
-    @JoinColumn(name = "nome", nullable = false)
+    @Column(name = "nome", nullable = false)
     private String nome;
-    @JoinColumn(name = "nome", nullable = false)
+    @Column(name = "prezzo", nullable = false)
     private int prezzoBase;
-    @JoinColumn(name = "nome", nullable = true)
+    @Column(name = "descrizione", nullable = true)
     private String descrizione;
 
     
+
     public Prodotto() {
     }
+
+
+
+    /* Getter & Setter */
 
 
     public Long getId() {

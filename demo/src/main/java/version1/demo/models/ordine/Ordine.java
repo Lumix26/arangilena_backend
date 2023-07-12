@@ -25,4 +25,41 @@ public abstract class Ordine {
 
     @Column(nullable = true, length = 512)
     private String descrizione;
+
+
+
+    
+
+    public Ordine() {
+    }
+
+
+    /* Getter & Setter */
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    
+    
 }

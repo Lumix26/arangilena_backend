@@ -1,19 +1,12 @@
 package version1.demo.services;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import version1.demo.models.utente.Acquirente;
-import version1.demo.models.utente.Dipendente;
-import version1.demo.models.utente.Indirizzo;
-import version1.demo.models.utente.Recapito;
-import version1.demo.models.utente.Ruolo;
 import version1.demo.repositories.AcquirenteRepo;
 import version1.demo.repositories.IndirizzoRepo;
 import version1.demo.repositories.RecapitoRepo;
