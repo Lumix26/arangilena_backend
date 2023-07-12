@@ -21,7 +21,7 @@ public abstract class Prodotto {
     @Column(name = "nome", nullable = false)
     private String nome;
     @Column(name = "prezzo", nullable = false)
-    private int prezzoBase;
+    private double prezzoBase;
     @Column(name = "descrizione", nullable = true)
     private String descrizione;
 
@@ -55,12 +55,12 @@ public abstract class Prodotto {
     }
 
 
-    public int getPrezzoBase() {
+    public double getPrezzoBase() {
         return prezzoBase;
     }
 
 
-    public void setPrezzoBase(int prezzoBase) {
+    public void setPrezzoBase(double prezzoBase) {
         this.prezzoBase = prezzoBase;
     }
 
