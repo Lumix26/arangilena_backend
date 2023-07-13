@@ -18,7 +18,7 @@ public abstract class Prodotto {
     @SequenceGenerator(name = "prodotto_generator", allocationSize = 1)
     private Long id;
 
-    @Column(name = "nome", nullable = false)
+    @Column(name = "nome", nullable = false, unique = true)
     private String nome;
     @Column(name = "prezzo", nullable = false)
     private double prezzoBase;

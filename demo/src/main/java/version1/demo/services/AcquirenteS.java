@@ -11,6 +11,7 @@ import version1.demo.repositories.AcquirenteRepo;
 import version1.demo.repositories.IndirizzoRepo;
 import version1.demo.repositories.RecapitoRepo;
 import version1.demo.repositories.UtenteRepo;
+import version1.demo.utils.exception.AcquirenteNonPresente;
 
 @Service
 public class AcquirenteS {
@@ -35,11 +36,12 @@ public class AcquirenteS {
     }
 
     @Transactional(readOnly = false)
-    public boolean deleteAcquirente(Long id){
+    public void deleteAcquirente(Long id) throws AcquirenteNonPresente{
         if(utenteRepo.existsById(id)){
             utenteRepo.deleteById(id);
-            return true;
-        }return false;
+        }else{
+            throw new AcquirenteNonPresente("L'acquirente identificato dall'id "+id+" non è presente.");
+        }
     }
 
     @Transactional(readOnly = true)

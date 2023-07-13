@@ -23,8 +23,12 @@ public class ProdottoC {
         try {
             pS.creaProdotto(dto);
         } catch (CategoriaNonPresente e) {
-            System.err.println("Il probelma sta nella Classe ProdottoC nel metodo aggiungiProdotto");
+           throw e;
         }
-        
+    }
+
+    @PostMapping("/deleteProd")
+    public void eliminaProdotto( @RequestBody String nome){
+
     }
 }

@@ -14,6 +14,7 @@ import version1.demo.models.utente.Indirizzo;
 import version1.demo.models.utente.Recapito;
 import version1.demo.services.AcquirenteS;
 import version1.demo.utils.DTOAcquirente;
+import version1.demo.utils.exception.AcquirenteNonPresente;
 
 @RestController
 @RequestMapping("/acquirenteAPI")
@@ -54,7 +55,7 @@ public class AcquirenteC {
             aS.createAcquirente(a);
             return new ModelAndView("ListaAcquirenti.html", "acquirenti", aS.listAcquirenti());
         } catch (RuntimeException e) {
-            System.out.println("Errore nella creazione di un'acquirente");
+            System.err.println("Errore nella creazione di un'acquirente");
             return new ModelAndView("ErrorCreazione.html", "null", null);
         }
     }
@@ -70,8 +71,7 @@ public class AcquirenteC {
         try {
             aS.deleteAcquirente(id);
             return new ModelAndView("ListaAcquirenti.html", "acquirenti", aS.listAcquirenti());
-        } catch (RuntimeException e) {
-            System.out.println("Errore nell'eliminazione di un'acquirente");
+        } catch (AcquirenteNonPresente e) {
             return new ModelAndView("ErrorCancellazione.html", "null", null);
         }
     }

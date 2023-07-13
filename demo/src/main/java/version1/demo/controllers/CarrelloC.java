@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,21 +40,35 @@ public class CarrelloC {
 
     @PostMapping("/addCart")
     public void aggiungiAlCarrello(@RequestBody DTOProdotto prod){
-        Prodotto p = pRep.findByNome(prod.getNome()).get(0);
-        Map.Entry<Long,Integer> e = Map.entry(p.getId(), prod.getQnt());
-        cart.aggiungiProdotto(e);
+        Optional<Prodotto> op = pRep.findByNome(prod.getNome());
+        if(!op.isEmpty()){
+            Prodotto p = op.get();
+            Map.Entry<Long,Integer> e = Map.entry(p.getId(), prod.getQnt());
+            cart.aggiungiProdotto(e);
+        }
     }
 
     @PostMapping("/deleteFromCart")
     public void eliminaDalCarrello(@RequestBody DTOProdotto prod){
-        Prodotto p = pRep.findByNome(prod.getNome()).get(0);
-        Map.Entry<Long,Integer> e = Map.entry(p.getId(), prod.getQnt());
-        cart.eliminaProdotto(e);
+        Optional<Prodotto> op = pRep.findByNome(prod.getNome());
+        if(!op.isEmpty()){
+            Prodotto p = op.get();
+            Map.Entry<Long,Integer> e = Map.entry(p.getId(), prod.getQnt());
+            cart.eliminaProdotto(e);
+        }
     }
 
-    @GetMapping("/mostraCarrello")
+    /*@GetMapping("/mostraCarrello")
     public ModelAndView prodottiCarrello(){
         return new ModelAndView("Carrello.html", "carrello", cart.getCarrello());
+    }*/
+
+    @GetMapping("/mostraCarrello")
+    public void prodottiCarrello(){
+        HashMap<Long,Integer> c = cart.getCarrello();
+        for(Entry<Long,Integer> e : c.entrySet()){
+            System.out.println(e.toString());
+        }
     }
 
     @PostMapping("/inviaOrdina")
