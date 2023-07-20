@@ -20,7 +20,7 @@ public class Indirizzo {
     private String citta;
     @Column(nullable = false, length = 5)
     private String cap;
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String via;
     
     public String getCap() {

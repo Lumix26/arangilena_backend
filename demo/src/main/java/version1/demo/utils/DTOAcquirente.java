@@ -12,6 +12,7 @@ public class DTOAcquirente {
     private String telefono;
     private String piva;
     private String ragioneSociale;
+
     
 
     public DTOAcquirente() {
@@ -125,9 +126,10 @@ public class DTOAcquirente {
     public void setRagioneSociale(String ragioneSociale) {
         this.ragioneSociale = ragioneSociale;
     }
+
     
 
-
+    
     /* Getter & Setter */
 
     

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QueryOrdine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema.xsd">
+    <id> 1 </id>
+    <data> 18-07-2023 </data>
+    <descrizione> prova descrizione xml </descrizione>
+    <stato> IN SOSPESO </stato>
+    <categoria> INGROSSO </categoria>
+
+    <dettaglioOrdine>
+        <id> 3 </id>
+        <qnt> 2 </qnt>
+        <prodotto>
+            <id> 1 </id>
+            <nome> Novellino Navel </nome>
+            <prezzoBase> 0.12 </prezzoBase>
+            <descrizione> Arancia novella </descrizione>
+        </prodotto>
+    </dettaglioOrdine>
+    <dettaglioOrdine>
+        <id> 4 </id>
+        <qnt> 5 </qnt>
+        <prodotto>
+            <id> 2 </id>
+            <nome> Tarocco </nome>
+            <prezzoBase> 0.20 </prezzoBase>
+            <descrizione> Arancia Tarocco di calabria </descrizione>
+        </prodotto>
+    </dettaglioOrdine>
+</QueryOrdine>

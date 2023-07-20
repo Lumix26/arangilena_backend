@@ -12,7 +12,7 @@ import version1.demo.utils.DTOprodEntrata;
 import version1.demo.utils.exception.CategoriaNonPresente;
 
 @RestController
-@RequestMapping("/prodottiAPI")
+@RequestMapping("/produzione/prodottoAPI")
 public class ProdottoC {
     
     @Autowired

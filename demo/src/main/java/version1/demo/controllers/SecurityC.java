@@ -3,21 +3,12 @@ package version1.demo.controllers;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("/vetrina")
-public class VetrinaC {
-    
+@RequestMapping("/provaSicurezza")
+public class SecurityC {
     @GetMapping
-    public String home() {
-        return "home!";
+    public String prova(){
+        return "<h1> sono stato autenticato! </h1>";
     }
-
-    @GetMapping("/chiSiamo")
-    public String chiSiamo(){
-        return "chi siamo!";
-    }
-
-
 }

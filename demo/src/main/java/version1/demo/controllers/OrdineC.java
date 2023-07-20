@@ -15,7 +15,7 @@ import version1.demo.utils.DTOStatoOrdine;
 import version1.demo.utils.DTOrdine;
 
 @RestController
-@RequestMapping("/ordini-da-clienti")
+@RequestMapping("/produzione/ordineEntrataAPI")
 public class OrdineC {
     
     @Autowired

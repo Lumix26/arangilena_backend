@@ -1,6 +1,11 @@
 package version1.demo.controllers;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,55 +14,62 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import version1.demo.models.security.ERole;
+import version1.demo.models.security.Role;
 import version1.demo.models.utente.Acquirente;
 import version1.demo.models.utente.Indirizzo;
 import version1.demo.models.utente.Recapito;
+import version1.demo.repositories.RoleRepo;
 import version1.demo.services.AcquirenteS;
 import version1.demo.utils.DTOAcquirente;
 import version1.demo.utils.exception.AcquirenteNonPresente;
 
 @RestController
-@RequestMapping("/acquirenteAPI")
+@RequestMapping("/produzione/customerAPI")
 public class AcquirenteC {
 
     @Autowired
     private AcquirenteS aS;
+    @Autowired
+    private RoleRepo roleRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     /*  
      * Homepage che mostra le operazioni effettuabili sugli acquirenti.
      */
     @GetMapping
-    public ModelAndView acquirenteHome(Model m) {
-        return new ModelAndView("AcquirenteHome.html", "null", null);
+    public String acquirenteHome(Model m) {
+        //return new ModelAndView("AcquirenteHome.html", "null", null);
+        return "acquirente API";
     }
 
     /*
      * Pagina che visualizza il form di creazione di un nuovo acquirente.
      */
     @GetMapping("/create-view")
-    public ModelAndView viewNewAcquirente(Model m){
-        return new ModelAndView("CreaAcquirente.html", "null", null);
+    public String viewNewAcquirente(Model m){
+        //return new ModelAndView("CreaAcquirente.html", "null", null);
+        return "crea acquirente";
     }
 
-    @PostMapping("/createAcquirente")
-    public ModelAndView createNewAcquirente(@RequestBody DTOAcquirente dtoA){
+    @PostMapping("/createCustomer")
+    public void createNewAcquirente(@RequestBody DTOAcquirente dtoA){
+        Set<Role> ruoli = new HashSet<>();
         Acquirente a = new Acquirente();
         a.setUsername(dtoA.getUsername());
-        a.setPassword(dtoA.getPassword());
+        a.setPassword(passwordEncoder.encode(dtoA.getPassword()));
         a.setPiva(dtoA.getPiva());
         a.setRagioneSociale(dtoA.getRagioneSociale());
         Indirizzo i = new Indirizzo(dtoA.getCitta(), dtoA.getCap(), dtoA.getVia(), dtoA.getNumeroCivico());
         Recapito r = new Recapito(dtoA.getMail(),dtoA.getFax(),dtoA.getTelefono());
         a.setIndirizzo(i);
         a.setRecapito(r);
-
-        try {
-            aS.createAcquirente(a);
-            return new ModelAndView("ListaAcquirenti.html", "acquirenti", aS.listAcquirenti());
-        } catch (RuntimeException e) {
-            System.err.println("Errore nella creazione di un'acquirente");
-            return new ModelAndView("ErrorCreazione.html", "null", null);
-        }
+        ruoli.add(roleRepo.findByNome(ERole.GUEST).get());
+        a.setRuoli(ruoli);
+        
+        aS.createAcquirente(a);
     }
 
 
