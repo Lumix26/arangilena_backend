@@ -10,13 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/produzione")
 public class HomeworkersC {
     
-    /*@GetMapping
-    public ModelAndView home(Model m){
-        return new ModelAndView("Homeworkers.html", "null", null);
-    }*/
-
     @GetMapping
-    public String home (){
-        return "produzione";
+    public ModelAndView home(Model m){
+        return new ModelAndView("DipendentiHome.html", "null", null);
     }
+
 }

@@ -1,6 +1,7 @@
 package version1.demo.models.ordine;
 
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +33,7 @@ public class Entrata extends Ordine{
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_ordine")
-    private LinkedList<DettaglioOrdine> dettagli = new LinkedList<>();
+    private Collection<DettaglioOrdine> dettagli = new LinkedList<>();
 
     public Entrata() {
     }
@@ -51,12 +52,12 @@ public class Entrata extends Ordine{
     }
 
 
-    public LinkedList<DettaglioOrdine> getDettagli() {
+    public Collection<DettaglioOrdine> getDettagli() {
         return dettagli;
     }
 
 
-    public void setDettagli(LinkedList<DettaglioOrdine> dettagli) {
+    public void setDettagli(Collection<DettaglioOrdine> dettagli) {
         this.dettagli = dettagli;
     }
 

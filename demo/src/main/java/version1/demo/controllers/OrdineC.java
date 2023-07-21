@@ -22,6 +22,11 @@ public class OrdineC {
     private OrdineS ordineS;
 
     @GetMapping
+    public ModelAndView homeOrdini(){
+        return new ModelAndView("OrdiniHome.html", "null", null);
+    }
+
+    @GetMapping("/listaOrdini")
     public ModelAndView listaOrdini(Model m){
         return new ModelAndView("ListaOrdini.html", "ordini", ordineS.listaOrdini());
     }

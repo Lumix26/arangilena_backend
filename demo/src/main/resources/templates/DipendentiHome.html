@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arangilena | Home </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header>
+    <div class="header-image" style=" background-image: url( ../img/agrumeto-social-min.jpg);">
+      <div class="color-overlay d-flex justify-content-center align-items-center">
+        <h2> Arangilena | Home aziendale</h2>
+      </div>
+      <div class="color-overlay d-flex justify-content-center align-items-md-end">
+        <h3>Lavoriamo per la qualità</h3>
+      </div>
+      <div class="dropstart mx-2">
+        <a id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="../img/orange.png" style="height: 70px; width: 70px;">
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">Accedi</a></li>
+            <li><a class="dropdown-item" href="#">Richiedi Assistenza</a></li>
+        </ul>
+      </div>            
+    </div>
+  </header>
+
+    <div class="d-flex justify-content-between pt-5 pb-5 mx-2">
+        <div class="card" style="width: 36rem; height: 36rem;">
+            <img src="../img/iStock-865548596.jpg" class="card-img-top" style="object-fit: cover;">
+            <div class="card-body">
+              <h3 class="card-title text-center">Amministrazione Generale</h5>
+              <p class="card-text">
+                <ul>
+                  <li>Gestione dell'organico aziendale</li>
+                  <li>Gestione Acquirenti</li>
+                  <li>Gestione Fornitori</li>
+                  <li>Gestione Fatture</li>
+                </ul>
+              </p>
+              <div class="d-grid">
+                <button type="button" class="btn btn-outline-success">Visualizza Amministrazione</button>
+              </div>
+            </div>
+        </div>
+        <div class="card" style="width: 36rem; height: 36rem;">
+            <img src="../img/international.jpg" class="card-img-top" style="object-fit: cover;" >
+            <div class="card-body">
+              <h3 class="card-title text-center">Ordini a fornitori</h5>
+              <p class="card-text">
+                <ul>
+                  <li>Visualizza Fornitori</li>
+                  <li>Creazione nuovo ordine</li>
+                  <li>Visualizza ordini</li>
+                </ul>
+              </p><br>
+              <div class="d-grid">
+                <button type="button" class="btn btn-outline-success">Visualizza Fornitori</button>
+              </div>
+            </div>
+        </div>
+        <div class="card" style="width: 36rem; height: 36rem;">
+            <img src="../img/illustr-magazzino.jpg" class="card-img-top">
+            <div class="card-body">
+              <h3 class="card-title text-center">Gestione depositi</h5>
+              <p class="card-text">
+                <ul>
+                  <li>Visualizza Depositi</li>
+                  <li>Aggiorna scorte</li>
+                </ul>
+              </p><br><br>
+              <div class="d-grid">
+                <button type="button" class="btn btn-outline-success">Visualizza Depositi</button>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between mx-2" >
+        <div class="card" style="width: 36rem; height: 36rem;">
+            <img src="../img/attività.jpg" class="card-img-top" style="width:100%; height: 55%; object-fit: cover;">
+            <div class="card-body">
+              <h3 class="card-title text-center">Attività operative</h5>
+              <p class="card-text">
+                <ul>
+                  <li>Registra carico</li>
+                  <li>Tracciamento controllo qualità</li>
+                  <li>Resoconto produzione</li>
+                  <li>Visualizza manutenzioni</li>
+                </ul>
+              </p>
+              <div class="d-grid">
+                <button type="button" class="btn btn-outline-success">Visualizza Attività</button>
+              </div>
+            </div>
+        </div>
+        <div class="card" style="width: 36rem; height: 36rem;">
+            <img src="../img/gestione-ordini.jpg" class="card-img-top" style="width: 100%; height: 55%; object-fit: cover;">
+            <div class="card-body">
+              <h3 class="card-title text-center">Ordini in entrata</h5>
+              <p class="card-text">
+                <ul>
+                  <li>Aggiunta di un ordine</li>
+                  <li>Visualizza informazioni ordine</li>
+                  <li>Gestione vetrina</li>
+                </ul>
+              </p><br>
+              <div class="d-grid">
+                <a th:href="@{/produzione/ordineEntrataAPI}" class="btn btn-outline-success">Visualizza Ordini</a>
+              </div>
+            </div>
+        </div>
+        <div class="card" style="width: 36rem; height: 36rem;">
+            <img src="../img/reclamo.jpg" class="card-img-top" style="width: 100%; height: 55%; object-fit: cover;">
+            <div class="card-body">
+              <h3 class="card-title text-center">Reclami</h5>
+              <p class="card-text">
+                <ul>
+                  <li>Visualizza reclami</li>
+                  <li>Modifica stato reclamo</li>
+                  <li>Generazione coupon</li>
+                </ul>
+              </p><br>
+              <div class="d-grid">
+                <button type="button" class="btn btn-outline-success">Visualizza Reclami</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

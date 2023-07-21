@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it" xmlns="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arangilena | ListaOrdini  </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        html, body {
+          height: 100%;
+        }
+    
+        .container-fixed {
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          padding: 20px;
+          background-color: #f8f9fa;
+        }
+    
+        /* Aggiungi altri stili personalizzati se necessario */
+    
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-image"
+            style=" background-image: url(../img/agrumeto-social-min.jpg);">
+            <div class="color-overlay d-flex justify-content-center align-items-center">
+                <h2> Arangilena | Ordini in entrata</h2>
+            </div>
+            <div class="color-overlay d-flex justify-content-center align-items-md-end">
+                <h3>Lavoriamo per la qualità</h3>
+            </div>
+            <div class="dropstart mx-2">
+                <a id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="../img/orange.png" style="height: 70px; width: 70px;">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Accedi</a></li>
+                    <li><a class="dropdown-item" href="#">Richiedi Assistenza</a></li>
+                </ul>
+            </div>              
+        </div>
+    </header>
+
+    <lista>
+        <table class="table table-striped table-sm">
+            <thread class="thead-dark">
+                <tr class="align-middle">
+                    <th scope="col">ID Ordine</th>
+                    <th scope="col">ID Acquirente</th>
+                    <th scope="col">ragione sociale</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Dettaglio Prodotti</th>
+                    <th scope="col">Descrizione</th>
+                    <th scope="col">#</th>
+                </tr>
+            </thread>
+            <tbody>
+                <!-- RIGA CON LA SINTASSI THYMELEAF-->
+                <tr class="align-middle" th:each="ordine: ${ordini}">
+                    <td th:text="${ordine.getId()}"></td>
+                    <td th:text="${ordine.getCliente().getId()}"></td>
+                    <td th:text="${ordine.getCliente().getRagioneSociale()}"></td>
+                    <td th:text="${ordine.getData()}"></td>
+                    <td>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Prodotto</th>
+                                    <th>Quantita</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Utilizza la sintassi Thymeleaf per iterare sulla lista di oggetti TabellaInterna -->
+                                <tr th:each="prodotto : ${ordine.getDettagli()}">
+                                    <td th:text="${prodotto.getId()}"></td>
+                                    <td th:text="${prodotto.getQnt()}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td th:text="${ordine.getDescrz()}"></td>
+                    <td><a th:href="@{/produzione/ordineEntrataAPI/aggiornaStato}" class="btn btn-outline-success">Conferma</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </lista>
+
+    <buttons>
+        <div class="container-fluid">
+            <ul class="text-center list-inline py-3">
+                <li class="list-inline-item">
+                    <button type="button" class="btn btn-success">Aggiungi Nuovo</button>
+                </li>
+                <li class="list-inline-item">
+                    <a th:href="@{/vetrina}" class="btn btn-success btn-icon-bottom-left">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+                            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                        </svg> Home
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </buttons>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
+

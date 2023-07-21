@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,6 +31,7 @@ import version1.demo.services.OrdineS;
 import version1.demo.utils.Carrello;
 import version1.demo.utils.DTOProdotto;
 import version1.demo.utils.DTOrdine;
+import version1.demo.utils.ProdottoCart;
 
 @RestController
 @RequestMapping("/carrelloAPI")
@@ -73,15 +75,26 @@ public class CarrelloC {
     }*/
 
     @GetMapping("/mostraCarrello")
-    public void prodottiCarrello(){
+    public ModelAndView prodottiCarrello(){
         HashMap<Long,Integer> c = cart.getCarrello();
+        LinkedList<ProdottoCart> prodotti = new LinkedList<>();
+
         for(Entry<Long,Integer> e : c.entrySet()){
-            System.out.println(e.toString());
+            Optional<Prodotto> op = pRep.findById(e.getKey());
+            if(!op.isEmpty()){
+                Prodotto p = op.get();
+                ProdottoCart pCart = new ProdottoCart();
+                pCart.setNome(p.getNome());
+                pCart.setQnt(e.getValue());
+                pCart.setPrezzo_parziale(p.getPrezzoBase()*e.getValue());
+                prodotti.add(pCart);
+            }
         }
+        return new ModelAndView("Carrello.html", "prodottiCart", prodotti);
     }
 
     @PostMapping("/inviaOrdine")
-    public void inviaOrdina(@RequestBody String descr){
+    public void inviaOrdina(@RequestParam("descrizione") String descr){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         HashMap<Long,Integer> prodQnt = cart.getCarrello();
@@ -92,30 +105,29 @@ public class CarrelloC {
         
 
         for( Entry<Long,Integer> e : prodQnt.entrySet()){
-            //Optional<ProdottoEntrata> op = pERep.findById(e.getKey());
-            Optional<Prodotto> op = pRep.findById(e.getKey());
+            Optional<ProdottoEntrata> op = pERep.findById(e.getKey());
             if(!op.isEmpty()){
-                /*ProdottoEntrata pE = op.get();
+                ProdottoEntrata pE = op.get();
                 CategoriaE c = pE.getCategoriaE();
                 if( c.getNome().equals("INGROSSO") ){
                     countINGROSSO++;
                 }else{
                     countBEVANDA++;
-                }*/
-                Prodotto pE = op.get();
+                }
                 DettaglioOrdine dto = new DettaglioOrdine();
                 dto.setProdotto(pE);
-                dto.setQnt(e.getValue());
+                if( e.getValue() <= pE.getMax_scorte())
+                    dto.setQnt(e.getValue());
                 dttRepo.save(dto);
                 prodotti.add(dto);
             }
         }
-        /*if(countINGROSSO == prodQnt.size()){
+        if(countINGROSSO == prodQnt.size()){
             dtOrdine.setCategoria("INGROSSO");
         }
         if(countBEVANDA == prodQnt.size()){
             dtOrdine.setCategoria("BEVANDE");
-        }*/
+        }
         dtOrdine.setDettagliProd(prodotti);
         dtOrdine.setCategoria("MISTO");
         dtOrdine.setDescrizione(descr);

@@ -1,6 +1,7 @@
 package version1.demo.services;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ import version1.demo.repositories.AcquirenteRepo;
 import version1.demo.repositories.EntrataRepo;
 import version1.demo.repositories.OrdineRepo;
 import version1.demo.repositories.ProdottoRepo;
+import version1.demo.utils.DTOEntrata;
 import version1.demo.utils.DTOStatoOrdine;
 import version1.demo.utils.DTOrdine;
 
@@ -35,8 +37,27 @@ public class OrdineS {
 
 
     @Transactional(readOnly = true)
-    public List<Entrata> listaOrdini(){
-        return entrataRepo.findAll();
+    public List<DTOEntrata> listaOrdini(){
+        List<Ordine> ordine = ordineRepo.findAll();
+        List<Entrata> ordine_E = entrataRepo.findAll();
+        List<DTOEntrata> res = new LinkedList<>();
+        for( Ordine o : ordine ){
+            for(Entrata oe : ordine_E){
+                if(o.getId() == oe.getId()){
+                    DTOEntrata dtoE = new DTOEntrata();
+                    dtoE.setId(o.getId());
+                    dtoE.setData(o.getData());
+                    dtoE.setDescrz(o.getDescrizione());
+                    dtoE.setCategoria(oe.getCategoria());
+                    dtoE.setCliente(oe.getAcquirente());
+                    dtoE.setStato(oe.getStato());
+                    dtoE.setDettagli(oe.getDettagli());
+
+                    res.add(dtoE);
+                }
+            }
+        }
+        return res;
     }
 
     @Transactional(readOnly = false)
@@ -54,6 +75,7 @@ public class OrdineS {
         oe.setDettagli(ordine.getDettagliProd());
         oe.setData(LocalDate.now());
         oe.setStato(StatoOrdine.ATTESA);
+        oe.setCategoria(ordine.getCategoria());
 
         ordineRepo.save(oe);
     }

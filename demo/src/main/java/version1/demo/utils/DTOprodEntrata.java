@@ -6,6 +6,7 @@ public class DTOprodEntrata {
     private String descrz;
     private double prezzo;
     private String nomeCategoria;
+    private int scorte;
 
     public DTOprodEntrata() {
     }
@@ -40,6 +41,14 @@ public class DTOprodEntrata {
 
     public void setNomeCategoria(String nomeCategoria) {
         this.nomeCategoria = nomeCategoria;
+    }
+
+    public int getScorte() {
+        return scorte;
+    }
+
+    public void setScorte(int scorte) {
+        this.scorte = scorte;
     }
 
     

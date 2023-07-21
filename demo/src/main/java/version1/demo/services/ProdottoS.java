@@ -31,6 +31,7 @@ public class ProdottoS {
         pE.setNome(dto.getNome());
         pE.setPrezzoBase(dto.getPrezzo());
         pE.setDescrizione(dto.getDescrz());
+        pE.setMax_scorte(dto.getScorte());
         
         Optional<CategoriaE> op = catRepo.findByNome(dto.getNomeCategoria());
 

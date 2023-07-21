@@ -18,6 +18,8 @@ public abstract class Prodotto {
     @SequenceGenerator(name = "prodotto_generator", allocationSize = 1)
     private Long id;
 
+    @Column(name = "scorte", nullable = false)
+    private int max_scorte;
     @Column(name = "nome", nullable = false, unique = true)
     private String nome;
     @Column(name = "prezzo", nullable = false)
@@ -72,6 +74,18 @@ public abstract class Prodotto {
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+
+
+
+    public int getMax_scorte() {
+        return max_scorte;
+    }
+
+
+
+    public void setMax_scorte(int max_scorte) {
+        this.max_scorte = max_scorte;
     }
 
     
