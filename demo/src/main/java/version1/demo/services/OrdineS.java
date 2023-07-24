@@ -80,6 +80,7 @@ public class OrdineS {
         ordineRepo.save(oe);
     }
 
+    @Transactional(readOnly = false)
     public void updateStatusOrder(DTOStatoOrdine stato){
 
         Optional<Entrata> op = entrataRepo.findById(stato.getId_ordine());

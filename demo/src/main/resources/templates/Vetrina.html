@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="/style.css">
     <title>Arangilena Vetrina</title>
 </head>
 <body>
     
     <header>
         <div class="header-image"
-            style=" background-image: url(../img/agrumeto-social-min.jpg);">
+            style=" background-image: url(/img/agrumeto-social-min.jpg);">
             <div class="color-overlay d-flex justify-content-center align-items-center">
                 <h1> Arangilena </h1>
             </div>
@@ -20,10 +20,11 @@
             </div>
             <div class="dropstart">
                 <a id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="../img/orange.png" style="height: 70px; width: 70px;">
+                  <img src="/img/orange.png" style="height: 70px; width: 70px;">
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="#">Accedi</a></li>
+                  <li><a class="dropdown-item" th:href="@{/carrelloAPI/mostraCarrello}">Carrello</a></li>
+                  <li><a class="dropdown-item" th:href="@{/vetrina/registrazione}">Sign In</a></li>
                   <li><a class="dropdown-item" href="#">Richiedi Assistenza</a></li>
                 </ul>
               </div>
@@ -32,30 +33,32 @@
 
     <div class="d-flex justify-content-between pt-5 pb-5">
         <div class="card" style="width: 36rem;">
-            <img src="../img/slide-2.png" class="card-img-top">
+            <img src="/img/slide-2.png" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title text-center">Chi siamo</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">L'azienda Arangilena s.r.l.  opera con notevole successo da molti anni nel settore agroalimentare.
+                E’  una azienda giovane e dinamica che si occupa della lavorazione e del commercio all’ingrosso di agrumi.</p>
               <div class="d-grid">
                 <button type="button" class="btn btn-outline-success">Scoprici!</button>
               </div>
             </div>
         </div>
         <div class="card" style="width: 36rem;">
-            <img src="../img/food-fruit-orange-65923.png" class="card-img-top" >
+            <img src="/img/food-fruit-orange-65923.png" class="card-img-top" >
             <div class="card-body">
               <h3 class="card-title text-center">Cosa offriamo</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">L'azienda Arangilena s.r.l. si occupa della lavorazione di diversi agrumi, non solo per la vendita all'ingrosso
+                ma anche per la produzione di succo d'arancia. Scropri e acquista i nostri prodotti!</p>
               <div class="d-grid">
                 <a th:href="@{/vetrina/prodottiOfferti}" class="btn btn-outline-success">Visualizza prodotti!</a>
               </div>
             </div>
         </div>
         <div class="card" style="width: 36rem;">
-            <img src="../img/gv_5afef8a7e9a3a_orig.jpg" class="card-img-top">
+            <img src="/img/gv_5afef8a7e9a3a_orig.jpg" class="card-img-top">
             <div class="card-body">
               <h3 class="card-title text-center">I nostri collaboratori</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">Scopri le numerose aziende che collaborano con Arangilena s.r.l o collabora con noi!</p>
               <div class="d-grid">
                 <button type="button" class="btn btn-outline-success">Collabora!</button>
               </div>

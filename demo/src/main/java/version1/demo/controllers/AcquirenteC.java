@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import version1.demo.models.security.ERole;
 import version1.demo.models.security.Role;
@@ -55,21 +57,26 @@ public class AcquirenteC {
     }
 
     @PostMapping("/createCustomer")
-    public void createNewAcquirente(@RequestBody DTOAcquirente dtoA){
+    public RedirectView createNewAcquirente(@RequestParam("ragione")String rs,@RequestParam("piva")String piva,
+        @RequestParam("via")String via, @RequestParam("civico")int civico,@RequestParam("citta")String citta,
+            @RequestParam("cap")String cap,@RequestParam("email")String email,@RequestParam("telefono")String tel,
+                @RequestParam("fax")String fax,@RequestParam("username")String username,@RequestParam("password")String psw){
+
         Set<Role> ruoli = new HashSet<>();
         Acquirente a = new Acquirente();
-        a.setUsername(dtoA.getUsername());
-        a.setPassword(passwordEncoder.encode(dtoA.getPassword()));
-        a.setPiva(dtoA.getPiva());
-        a.setRagioneSociale(dtoA.getRagioneSociale());
-        Indirizzo i = new Indirizzo(dtoA.getCitta(), dtoA.getCap(), dtoA.getVia(), dtoA.getNumeroCivico());
-        Recapito r = new Recapito(dtoA.getMail(),dtoA.getFax(),dtoA.getTelefono());
+        a.setUsername(username);
+        a.setPassword(passwordEncoder.encode(psw));
+        a.setPiva(piva);
+        a.setRagioneSociale(rs);
+        Indirizzo i = new Indirizzo(citta, cap, via, civico);
+        Recapito r = new Recapito(email,fax,tel);
         a.setIndirizzo(i);
         a.setRecapito(r);
         ruoli.add(roleRepo.findByNome(ERole.GUEST).get());
         a.setRuoli(ruoli);
         
         aS.createAcquirente(a);
+        return new RedirectView("/vetrina");
     }
 
 

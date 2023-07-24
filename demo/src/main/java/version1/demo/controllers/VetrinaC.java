@@ -27,5 +27,10 @@ public class VetrinaC {
         return "chi siamo!";
     }
 
+    @GetMapping("/registrazione")
+    public ModelAndView registrati(){
+        return new ModelAndView("RegistraCliente.html", "null", null);
+    }
+
 
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import version1.demo.models.ordine.DettaglioOrdine;
 import version1.demo.models.prodotto.CategoriaE;
 import version1.demo.models.prodotto.Prodotto;
@@ -49,24 +53,28 @@ public class CarrelloC {
     @Autowired
     private DettOrdineRepo dttRepo;
 
+    private SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+
     @PostMapping("/addCart")
-    public void aggiungiAlCarrello(@RequestBody DTOProdotto prod){
+    public RedirectView aggiungiAlCarrello(@RequestBody DTOProdotto prod){
         Optional<Prodotto> op = pRep.findByNome(prod.getNome());
         if(!op.isEmpty()){
             Prodotto p = op.get();
             Map.Entry<Long,Integer> e = Map.entry(p.getId(), prod.getQnt());
             cart.aggiungiProdotto(e);
         }
+        return new RedirectView("/vetrina/prodottiOfferti");
     }
 
     @PostMapping("/deleteFromCart")
-    public void eliminaDalCarrello(@RequestBody DTOProdotto prod){
+    public RedirectView eliminaDalCarrello(@RequestBody DTOProdotto prod){
         Optional<Prodotto> op = pRep.findByNome(prod.getNome());
         if(!op.isEmpty()){
             Prodotto p = op.get();
             Map.Entry<Long,Integer> e = Map.entry(p.getId(), prod.getQnt());
             cart.eliminaProdotto(e);
         }
+        return new RedirectView("/carrelloAPI/mostraCarrello");
     }
 
     /*@GetMapping("/mostraCarrello")
@@ -94,7 +102,7 @@ public class CarrelloC {
     }
 
     @PostMapping("/inviaOrdine")
-    public void inviaOrdina(@RequestParam("descrizione") String descr){
+    public RedirectView inviaOrdina(@RequestParam("descrizione") String descr){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         HashMap<Long,Integer> prodQnt = cart.getCarrello();
@@ -142,5 +150,12 @@ public class CarrelloC {
         
 
         ordineS.creaOrdine(dtOrdine);
+        cart.svuotaCarrello();
+        return new RedirectView("/carrelloAPI/mostraCarrello");
+    }
+
+    @PostMapping("/logout")
+    public void logOut(HttpServletRequest request, HttpServletResponse response, Authentication auth){
+        this.logoutHandler.logout(request, response, auth);
     }
 }

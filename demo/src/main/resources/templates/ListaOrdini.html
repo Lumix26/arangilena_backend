@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="it" xmlns="www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arangilena | ListaOrdini  </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../style.css">
-
+    <link rel="stylesheet" href="/style.css">
+    <title>Arangilena | ListaOrdini  </title>
     <style>
         html, body {
           height: 100%;
@@ -20,14 +19,12 @@
           background-color: #f8f9fa;
         }
     
-        /* Aggiungi altri stili personalizzati se necessario */
-    
     </style>
 </head>
 <body>
     <header>
         <div class="header-image"
-            style=" background-image: url(../img/agrumeto-social-min.jpg);">
+            style=" background-image: url(/img/agrumeto-social-min.jpg);">
             <div class="color-overlay d-flex justify-content-center align-items-center">
                 <h2> Arangilena | Ordini in entrata</h2>
             </div>
@@ -36,10 +33,10 @@
             </div>
             <div class="dropstart mx-2">
                 <a id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="../img/orange.png" style="height: 70px; width: 70px;">
+                  <img src="/img/orange.png" style="height: 70px; width: 70px;">
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Accedi</a></li>
+                    <li><a class="dropdown-item" href="@{/produzione}">Home dipendenti</a></li>
                     <li><a class="dropdown-item" href="#">Richiedi Assistenza</a></li>
                 </ul>
             </div>              
@@ -60,7 +57,6 @@
                 </tr>
             </thread>
             <tbody>
-                <!-- RIGA CON LA SINTASSI THYMELEAF-->
                 <tr class="align-middle" th:each="ordine: ${ordini}">
                     <td th:text="${ordine.getId()}"></td>
                     <td th:text="${ordine.getCliente().getId()}"></td>
@@ -75,7 +71,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Utilizza la sintassi Thymeleaf per iterare sulla lista di oggetti TabellaInterna -->
                                 <tr th:each="prodotto : ${ordine.getDettagli()}">
                                     <td th:text="${prodotto.getId()}"></td>
                                     <td th:text="${prodotto.getQnt()}"></td>
@@ -84,12 +79,37 @@
                         </table>
                     </td>
                     <td th:text="${ordine.getDescrz()}"></td>
-                    <td><a th:href="@{/produzione/ordineEntrataAPI/aggiornaStato}" class="btn btn-outline-success">Conferma</a></td>
+                    <td><button type="button" class="btn btn-outline-success" 
+                        th:onclick="'confermaOrdine(' + ${ordine.getId()} + ')'">Conferma</button></td>
                 </tr>
             </tbody>
         </table>
     </lista>
 
+    <script>
+        function confermaOrdine(orderId) {
+            var data = {
+                id_ordine: orderId,
+                stato: "LAVORAZIONE"
+            };
+
+            // Invia la richiesta POST al server
+            fetch('/produzione/ordineEntrataAPI/aggiornaStato', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(function(response) {
+                // Gestisci la risposta del server qui, se necessario
+                console.log('Ordine confermato con successo!');
+                alert("Ordine confermato!");
+                location.reload(); // Aggiorna la pagina dopo la conferma
+            }).catch(function(error) {
+                console.error('Errore durante la conferma dell\'ordine:', error);
+            });
+        }
+    </script>
     <buttons>
         <div class="container-fluid">
             <ul class="text-center list-inline py-3">

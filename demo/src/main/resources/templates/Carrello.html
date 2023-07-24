@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="it" xmlns="www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arangilena | Carrello  </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="/style.css">
+    <title>Arangilena | Carrello  </title>
 
     <style>
         html, body {
@@ -27,7 +27,7 @@
 <body>
     <header>
         <div class="header-image"
-            style=" background-image: url(../img/agrumeto-social-min.jpg);">
+            style=" background-image: url(/img/agrumeto-social-min.jpg);">
             <div class="color-overlay d-flex justify-content-center align-items-center">
                 <h2> Arangilena | Carrello</h2>
             </div>
@@ -36,10 +36,11 @@
             </div>
             <div class="dropstart mx-2">
                 <a id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="../img/orange.png" style="height: 70px; width: 70px;">
+                  <img src="/img/orange.png" style="height: 70px; width: 70px;">
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Accedi</a></li>
+                    <li><a class="dropdown-item" th:href="@{/vetrina}">Vetrina</a></li>
+                    <li><a class="dropdown-item" th:href="@{/carrelloAPI/logout}">LogOut</a></li>
                     <li><a class="dropdown-item" href="#">Richiedi Assistenza</a></li>
                 </ul>
             </div>              
@@ -58,27 +59,25 @@
             </thread>
             <tbody>
                 <!-- RIGA CON LA SINTASSI THYMELEAF-->
-                <tr class="align-middle" th:each="prodotto: ${prodottiCart}" th:attr="data-nome=${prodotto.getNome()}, data-qnt=${prodotto.getQnt()}, data-prezzo-parziale=${prodotto.getPrezzo_parziale()}">
+                <tr class="align-middle" th:each="prodotto: ${prodottiCart}" th:attr="data-nome=${prodotto.getNome()}, data-qnt=${prodotto.getQnt()}">
                     <td th:text="${prodotto.getNome()}"></td>
                     <td th:text="${prodotto.getQnt()}"></td>
                     <td th:text="${prodotto.getPrezzo_parziale}"></td>
-                    <td><a class="btn btn-outline-success">Rimuovi</a></td>
+                    <td><button type="button" class="btn btn-outline-success">Rimuovi</button></td>
                 </tr>
             </tbody>
         </table>
     </lista>
     <script>
-        const buttons = document.querySelectorAll("btn");
+        const buttons = document.querySelectorAll("button");
         buttons.forEach(button => {
             button.addEventListener("click", function(event) {
                 const nome = document.querySelector("[data-nome]").getAttribute("data-nome");
                 const qnt = document.querySelector("[data-qnt]").getAttribute("data-qnt");
-                const prezzo_parziale = document.querySelector("[data-prezzo-parziale]").getAttribute("data-prezzo-parziale");
 
                 const data_send = {
                     nome : nome,
                     qnt : qnt,
-                    prezzo_parziale : prezzo_parziale
                 }
                 sendData(data_send)
             })
@@ -87,7 +86,7 @@
         function sendData(data) {
             // Effettua la richiesta AJAX per inviare i dati al server
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", "/carrelloAPI/addCart");
+            xhr.open("POST", "/carrelloAPI/deleteFromCart");
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify(data));
 
@@ -95,7 +94,8 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        alert("Dati inviati con successo!");
+                        location.reload();
+                        alert("Prodotto rimosso dal carrello!");
                     } else {
                         alert("Si è verificato un errore durante l'invio dei dati.");
                     }
@@ -115,7 +115,7 @@
                         <textarea name="descrizione" class="form-control" rows="3"></textarea>
                     </div>
                     <div class="form-group text-center" style="margin-top: 20px;">
-                        <button type="submit" class="btn btn-outline-success custom-btn">Invia</button>
+                        <button type="submit" class="btn btn-outline-success custom-btn" onclick="confermaOrdine()">Invia</button>
                     </div>
         </form>
     </div>
@@ -124,7 +124,7 @@
         <div class="container-fluid">
             <ul class="text-center list-inline py-3">
                 <li class="list-inline-item">
-                    <button type="button" class="btn btn-success">Aggiungi Nuovo</button>
+                    <a th:href="@{/vetrina/prodottiOfferti}" class="btn btn-success">Aggiungi Prodotto</a>
                 </li>
                 <li class="list-inline-item">
                     <a href="#" class="btn btn-success btn-icon-bottom-left">
@@ -137,7 +137,11 @@
             </ul>
         </div>
     </buttons>
-
+    <script>
+        function confermaOrdine(){
+            alert("ordine inviato correttamente");
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

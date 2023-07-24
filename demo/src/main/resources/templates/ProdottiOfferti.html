@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arangilena | Prodotti </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <header>
-        <div class="header-image" style=" background-image: url(../img/agrumeto-social-min.jpg);">
+        <div class="header-image" style=" background-image: url(/img/agrumeto-social-min.jpg);">
             <div class="color-overlay d-flex justify-content-center align-items-center">
-                <h1> Arangilena | I nostri prodotti </h1>
+                <h2> Arangilena | I nostri prodotti </h2>
             </div>
             <div class="color-overlay d-flex justify-content-center align-items-md-end">
                 <h3>Lavoriamo per la qualità</h3>
             </div>
-            <div class="dropstart mx-4">
+            <div class="dropstart mx-2">
                 <a id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="../img/orange.png" style="height: 70px; width: 70px;">
+                  <img src="/img/orange.png" style="height: 70px; width: 70px;">
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Accedi</a></li>
+                    <li><a class="dropdown-item" th:href="@{/carrelloAPI/mostraCarrello}">Carrello</a></li>
                     <li><a class="dropdown-item" href="#">Richiedi Assistenza</a></li>
                 </ul>
-            </div>
+            </div>              
         </div>
     </header>
 
@@ -33,14 +33,14 @@
     </div>
     <div class="d-flex justify-content-between pt-5 pb-5">
         <div class="card mx-5" style="width: 40rem; height: 30rem;">
-            <img src="../img/washington-navel.jpg" class="card-img-top" width="100%" height="50%" style="object-fit: cover;">
+            <img src="/img/washington-navel.jpg" class="card-img-top" width="100%" height="50%" style="object-fit: cover;">
             <div class="card-body">
                 <h3 class="card-title text-center">Navellino Navel</h3>
-                <p class="card-text">E uno dei primi agrumi offerti dai nostri agrumeti di Arance di Calabria. Dalla polpa succosa e priva di semi, si presta benissimo sia ad essere usata per sane e dissetanti spremute che da tavola. Il tempo di maturazione di questa tipologia di arance bionde va da novembre a gennaio.</p>
-                <form action="#" method="post">
+                <p class="card-text">E’ uno dei primi agrumi offerti dai nostri agrumeti di Arance di Calabria. Dalla polpa succosa e priva di semi, si presta benissimo sia ad essere usata per sane e dissetanti spremute che da tavola. Il tempo di maturazione di questa tipologia di arance bionde va da novembre a gennaio.</p>
+                <form action="@{/carrelloAPI/addCart}" method="post">
                     <div class="form-group row">
                         <div class="col-md-0">
-                            <input type="hidden" name="nome" value="NavellinoNavel">
+                            <input type="hidden" name="nome" value="Navellino">
                         </div>
                         <label for="Quantità" class="col-md-2 col-form-label">Q.tà</label>
                         <div class="col-md-2">
@@ -54,11 +54,11 @@
             </div>
         </div>
         <div class="card" style="width: 40rem;height: 30rem; margin-right: 40px;">
-            <img src="../img/arancia-valencia.jpg" class="card-img-top" width="100%" height="50%" style="object-fit: cover;">
+            <img src="/img/arancia-valencia.jpg" class="card-img-top" width="100%" height="50%" style="object-fit: cover;">
             <div class="card-body">
                 <h3 class="card-title text-center">Valencia</h3>
                 <p class="card-text">La varietà Valencia è adatta sia da tavola che da spremuta. Essendo caratterizzata da una buccia medio-fine noi la consigliamo sia da tavola che da spremuta. La raccolta nei nostri agrumeti va da marzo a maggio.</p>
-                <br><form action="#" method="post">
+                <br><form action="@{/carrelloAPI/addCart}" method="post">
                     <div class="form-group row">
                         <div class="col-md-0">
                             <input type="hidden" name="nome" value="Valencia">
@@ -77,11 +77,11 @@
     </div>
     <div class="d-flex justify-content-between pt-5 pb-5">
         <div class="card mx-5" style="width: 40rem; height: 30rem;">
-            <img src="../img/arancia-tarocco.jpg" class="card-img-top" width="100%" height="50%" style="object-fit: cover;">
+            <img src="/img/arancia-tarocco.jpg" class="card-img-top" width="100%" height="50%" style="object-fit: cover;">
             <div class="card-body">
                 <h3 class="card-title text-center">Tarocco</h3>
                 <p class="card-text">Anche questa tipologia di arance è adatta sia per essere gustata a tavola che da servire con deliziose spremute. Il colore dell’arancia tarocco è arancione intenso, arrivando ad una pigmentazione più rossa a maturazione inoltrata. Il tempo di maturazione delle arance tarocco va da gennaio a marzo.</p>
-                <form action="#" method="post">
+                <form action="@{/carrelloAPI/addCart}" method="post">
                     <div class="form-group row">
                         <div class="col-md-0">
                             <input type="hidden" name="nome" value="Tarocco">
@@ -98,14 +98,61 @@
             </div>
         </div>
         <div class="card" style="width: 40rem; height: 30rem; margin-right: 40px;">
-            <img src="../img/moro.jpg" class="card-img-top" width="100%" height="50%" style="object-fit: cover;">
+            <img src="/img/moro.jpg" class="card-img-top" width="100%" height="50%" style="object-fit: cover;">
             <div class="card-body">
                 <h3 class="card-title text-center">Moro</h3>
                 <p class="card-text">L'arancia Moro è particolarmente apprezzata per il suo sapore dolce e succoso, oltre al suo aspetto attraente. È spesso utilizzata per fare succhi di frutta, marmellate e dolci. Ha anche un alto contenuto di antiossidanti, grazie alla presenza di antociani che conferiscono il colore scuro alla sua polpa.</p>
-                <form action="#" method="post">
+                <form action="@{/carrelloAPI/addCart}" method="post">
                     <div class="form-group row">
                         <div class="col-md-0">
                             <input type="hidden" name="nome" value="Moro">
+                        </div>
+                        <label for="Quantità" class="col-md-2 col-form-label">Q.tà</label>
+                        <div class="col-md-2">
+                            <input type="number" name="qnt" min="0" class="form-control" placeholder="q.tà">
+                        </div>
+                        <div style="width: 350px; align-items: center;">
+                            <button type="submit" class="btn btn-outline-success text-center">Aggiungi</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid container-fixed" style="background-color:gainsboro;">
+        <h3 class="text-center pt-3 pb-3">Bevande all'ingrosso:</h3>
+    </div>
+    <div class="d-flex justify-content-between pt-5 pb-5">
+        <div class="card mx-5" style="width: 40rem; height: 30rem;">
+            <img src="/img/succo-arancia.png" class="card-img-top" width="100%" height="50%" style="object-fit: cover;">
+            <div class="card-body">
+                <h3 class="card-title text-center">Succo Arancia</h3>
+                <p class="card-text">Prova il nostro succo di arancia, prodotto nella nostra azienda con arance rigorosamente selezionate per offrirti sempre il meglio.</p>
+                <form action="@{/carrelloAPI/addCart}" method="post">
+                    <div class="form-group row">
+                        <div class="col-md-0">
+                            <input type="hidden" name="nome" value="AranciaBionda">
+                        </div>
+                        <label for="Quantità" class="col-md-2 col-form-label">Q.tà</label>
+                        <div class="col-md-2">
+                            <input type="number" name="qnt" min="0" class="form-control" placeholder="q.tà">
+                        </div>
+                        <div style="width: 350px; align-items: center;">
+                            <button type="submit" class="btn btn-outline-success text-center">Aggiungi</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card" style="width: 40rem; height: 30rem; margin-right: 40px;">
+            <img src="/img/succo-rosso.jpg" class="card-img-top" width="100%" height="50%" style="object-fit: cover;">
+            <div class="card-body">
+                <h3 class="card-title text-center">Succo Arancia Rossa</h3>
+                <p class="card-text">Prova il nostro succo di arancia rossa, prodotto nella nostra azienda con arance rigorosamente selezionate per offrirti sempre il meglio.</p>
+                <form action="@{/carrelloAPI/addCart}" method="post">
+                    <div class="form-group row">
+                        <div class="col-md-0">
+                            <input type="hidden" name="nome" value="AranciaRossa">
                         </div>
                         <label for="Quantità" class="col-md-2 col-form-label">Q.tà</label>
                         <div class="col-md-2">
@@ -148,6 +195,7 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
+                        location.reload();
                         alert("Dati inviati con successo!");
                     } else {
                         alert("Si è verificato un errore durante l'invio dei dati.");
@@ -156,9 +204,6 @@
             };
         }
     </script>
-    <div class="container-fluid container-fixed" style="background-color:gainsboro;">
-        <h3 class="text-center pt-3 pb-3">Bevande all'ingrosso:</h3>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

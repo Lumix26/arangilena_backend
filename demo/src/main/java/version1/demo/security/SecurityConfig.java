@@ -44,13 +44,20 @@ public class SecurityConfig {
         return http.build();*/
         return http.cors(cors -> cors.disable()).csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(
-            authorize -> authorize.requestMatchers("/vetrina/**").hasAuthority("GUEST")
-                            .requestMatchers("/produzione/**").permitAll()
+            authorize -> authorize.requestMatchers("/vetrina").permitAll()
+                            .requestMatchers("/vetrina/registrazione").permitAll()
+                            .requestMatchers("/vetrina/**").hasAuthority("GUEST")
+                            .requestMatchers("/produzione/customerAPI/createCustomer").permitAll()
+                            .requestMatchers("/produzione/**").hasAuthority("MEDIUM_LEVEL")
                             .requestMatchers("/provaSicurezza").hasAuthority("LOW_LEVEL")
-                            .requestMatchers("/carrelloAPI/**").permitAll()
+                            .requestMatchers("/carrelloAPI/**").hasAuthority("GUEST")
+                            .requestMatchers("/img/**").permitAll()
+                            .requestMatchers("/style.css").permitAll()
                             .anyRequest().authenticated()
         ).formLogin(
-            form -> form.permitAll().defaultSuccessUrl("/vetrina")
+            form -> form.defaultSuccessUrl("/vetrina").permitAll()
+        ).logout(
+            logout -> logout.logoutUrl("/carrelloAPI/logout").logoutSuccessUrl("/vetrina").permitAll()
         ).build();
         /*return http.authorizeHttpRequests(
             authorize -> authorize.requestMatchers("/vetrina/**").permitAll()

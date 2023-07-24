@@ -12,6 +12,12 @@ h1 {
     text-shadow: 2px 2px 2px rgb(0, 0, 0, .2);
 }
 
+h2 {
+    font-size: 6rem;
+    font-family: 'Times New Roman', Times, serif;
+    text-shadow: 2px 2px 2px rgb(0, 0, 0, .2);
+}
+
 h3 {
     font-family: 'Times New Roman', Times, serif;
 }
