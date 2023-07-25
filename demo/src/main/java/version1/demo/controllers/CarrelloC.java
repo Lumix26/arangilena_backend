@@ -36,6 +36,7 @@ import version1.demo.utils.Carrello;
 import version1.demo.utils.DTOProdotto;
 import version1.demo.utils.DTOrdine;
 import version1.demo.utils.ProdottoCart;
+import version1.demo.utils.exception.QntNonDisponibile;
 
 @RestController
 @RequestMapping("/carrelloAPI")
@@ -86,6 +87,8 @@ public class CarrelloC {
     public ModelAndView prodottiCarrello(){
         HashMap<Long,Integer> c = cart.getCarrello();
         LinkedList<ProdottoCart> prodotti = new LinkedList<>();
+        double costoOrdine = 0;
+        ModelAndView modelAndView = new ModelAndView("Carrello.html");
 
         for(Entry<Long,Integer> e : c.entrySet()){
             Optional<Prodotto> op = pRep.findById(e.getKey());
@@ -96,13 +99,16 @@ public class CarrelloC {
                 pCart.setQnt(e.getValue());
                 pCart.setPrezzo_parziale(p.getPrezzoBase()*e.getValue());
                 prodotti.add(pCart);
+                costoOrdine += p.getPrezzoBase()*e.getValue();
             }
         }
-        return new ModelAndView("Carrello.html", "prodottiCart", prodotti);
+        modelAndView.addObject("prodottiCart", prodotti);
+        modelAndView.addObject("totale", costoOrdine);
+        return modelAndView;
     }
 
     @PostMapping("/inviaOrdine")
-    public RedirectView inviaOrdina(@RequestParam("descrizione") String descr){
+    public RedirectView inviaOrdina(@RequestParam("descrizione") String descr) throws QntNonDisponibile{
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         HashMap<Long,Integer> prodQnt = cart.getCarrello();
@@ -124,8 +130,17 @@ public class CarrelloC {
                 }
                 DettaglioOrdine dto = new DettaglioOrdine();
                 dto.setProdotto(pE);
-                if( e.getValue() <= pE.getMax_scorte())
+                if( e.getValue() <= pE.getMax_scorte()){
                     dto.setQnt(e.getValue());
+                }else{
+                    cart.svuotaCarrello();
+                    return new RedirectView("/errore/scorte");
+                }
+                Optional<Prodotto> p = pRep.findById(e.getKey());
+                Prodotto pp = p.get();
+                int scorte_nuove = pp.getMax_scorte() - e.getValue();
+                pp.setMax_scorte(scorte_nuove);
+                pRep.save(pp);
                 dttRepo.save(dto);
                 prodotti.add(dto);
             }

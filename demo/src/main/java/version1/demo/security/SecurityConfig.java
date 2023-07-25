@@ -53,6 +53,7 @@ public class SecurityConfig {
                             .requestMatchers("/carrelloAPI/**").hasAuthority("GUEST")
                             .requestMatchers("/img/**").permitAll()
                             .requestMatchers("/style.css").permitAll()
+                            .requestMatchers("/errore/**").permitAll()
                             .anyRequest().authenticated()
         ).formLogin(
             form -> form.defaultSuccessUrl("/vetrina").permitAll()

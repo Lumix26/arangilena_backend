@@ -19,6 +19,9 @@ public class Carrello {
     public void aggiungiProdotto(Entry<Long,Integer> entry){
         if (!dettaglioProdotti.containsKey(entry.getKey())){
             dettaglioProdotti.put(entry.getKey(), entry.getValue());
+        }else{
+            int tmp = dettaglioProdotti.get(entry.getKey());
+            dettaglioProdotti.put(entry.getKey(), tmp+entry.getValue());
         }
     }
 
